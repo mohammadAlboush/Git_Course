@@ -1,0 +1,82 @@
+entity Lieferung {
+    kundennummer Kundennummer
+    strasse String
+    name String
+    // Weitere Felder...
+}
+
+entity Abholung {
+    kundennummer Kundennummer
+    name String
+    // Weitere Felder...
+}
+
+entity Vorbestellung {
+    bestellung Bestellung
+    name String
+    datum Datum
+    // Weitere Felder...
+}
+
+entity Nochoffen {
+    offeneBestellungen Bestellung
+    datum Datum
+    uhrzeit Uhrzeit
+    bezahlt Bezahlung
+    // Weitere Felder...
+}
+
+entity Kunde {
+    vorname String
+    nachname String
+    anschrift Anschrift
+    phoneNumber String
+    // Weitere Felder...
+}
+
+entity Fahrer {
+    firstName String
+    lastName String
+    email String
+    phoneNumber String
+    hireDate Instant
+    salary Long
+    commissionPct Long
+    // Weitere Felder...
+}
+
+entity Menu {
+    inhalt String
+    preis Double
+    beschreibung String
+    // Weitere Felder...
+}
+
+// Beziehungen (Relationships)
+
+// Ein Kunde kann mehrere Lieferungen, Abholungen, Vorbestellungen und offene Bestellungen haben.
+relationship ManyToOne {
+    Lieferung to Kunde
+    Abholung to Kunde
+    Vorbestellung to Kunde
+    Nochoffen to Kunde
+}
+
+// Jede Bestellung kann mehrere Menü-Optionen haben.
+relationship OneToMany {
+    Menu to Lieferung{Menu}
+    Menu to Abholung{Menu}
+    Menu to Vorbestellung{Menu}
+    Menu to Nochoffen{Menu}
+}
+
+
+
+// Use Data Transfer Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Employee, Job
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
